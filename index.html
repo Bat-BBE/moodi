@@ -7,6 +7,21 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <title>MOODI</title>
+<meta name="description" content="Moodi бол чиний хөөрхөн 3D найз. Илбэ, хоолло, тогло, бас найздаа Moodi захиа илгээ 💌">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MOODI">
+<meta property="og:title" content="💌 Чамд Moodi захиа ирлээ!">
+<meta property="og:description" content="Нээгээд үзээрэй, хөөрхөн Moodi чамд захиа уншиж өгнө 🥰">
+<meta property="og:image" content="https://moodi-vert.vercel.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://moodi-vert.vercel.app/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://moodi-vert.vercel.app/og.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-title" content="MOODI">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -92,7 +107,7 @@
   /* ── заавар ── */
   #hint {
     position: fixed; left: 0; right: 0; z-index: 2; text-align: center; font-size: 13px; font-weight: 800;
-    bottom: calc(var(--safe-b) + 108px); opacity: .55; transition: opacity .6s; pointer-events: none;
+    bottom: calc(var(--safe-b) + 166px); opacity: .55; transition: opacity .6s; pointer-events: none;
   }
   #hint.gone { opacity: 0; }
   #coach {
@@ -157,6 +172,7 @@
   #photo .card { display: flex; flex-direction: column; align-items: center; gap: 14px; transform: scale(.6) rotate(-12deg); transition: transform .55s cubic-bezier(.3,1.6,.5,1); }
   #photo.on .card { transform: scale(1) rotate(-3deg); }
   #photo img {
+    max-height: 68vh; object-fit: contain;
     width: min(76vw, 340px); border-radius: 6px; box-shadow: 0 14px 34px rgba(0,0,0,.35);
     -webkit-touch-callout: default; -webkit-user-select: auto; user-select: auto;
   }
@@ -336,8 +352,50 @@
   }
   .side button i { font-style: normal; font-size: 24px; line-height: 1; }
   .side button:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--ink); }
-  #meBtn { --c: #fff3c4; } #sendBtn { --c: #ffd6e6; }
-  #sendBtn i { animation: env 2.6s ease-in-out infinite; }
+  #meBtn { --c: #fff3c4; }
+  #sendFab {
+    position: fixed; right: 12px; bottom: calc(var(--safe-b) + 102px); z-index: 5; cursor: pointer;
+    font: inherit; color: var(--ink); display: flex; align-items: center; gap: 7px; padding: 7px 14px 7px 8px;
+    background: linear-gradient(135deg, #ffd1e3, #ffb3cf); border: 2.5px solid var(--ink); border-radius: 999px; box-shadow: 0 4px 0 var(--ink);
+    transition: transform .12s, box-shadow .12s, opacity .3s, visibility .3s; animation: fabIn .6s cubic-bezier(.3,1.6,.5,1) 1.2s backwards;
+  }
+  #sendFab i { font-style: normal; font-size: 28px; line-height: 1; display: inline-block; animation: env 2.6s ease-in-out infinite; filter: drop-shadow(0 2px 0 rgba(59,39,64,.2)); }
+  #sendFab span { font-size: 12px; font-weight: 900; line-height: 1.1; text-align: left; }
+  #sendFab em { position: absolute; top: -9px; right: -4px; font-style: normal; font-size: 9px; font-weight: 900; color: #fff; background: #ff4f6d; border: 2px solid var(--ink); border-radius: 99px; padding: 1px 5px; animation: pop .5s 1.8s backwards; }
+  #sendFab.seen em { display: none; }
+  #sendFab::before { content: '💖'; position: absolute; left: 6px; top: -6px; font-size: 13px; opacity: 0; animation: heartUp 2.6s ease-out infinite 1s; pointer-events: none; }
+  #sendFab:active { transform: translateY(3px) scale(.96); box-shadow: 0 1px 0 var(--ink); }
+  #sendFab.nudge { animation: nudge .9s cubic-bezier(.3,1.6,.5,1) 2; }
+  @keyframes fabIn { from { transform: translateX(140%) rotate(20deg); } }
+  @keyframes heartUp { 0% { transform: translate(0,0) scale(.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(-10px,-34px) scale(1.1); opacity: 0; } }
+  @keyframes nudge { 0%,100% { transform: scale(1); } 30% { transform: scale(1.18) rotate(-6deg); } 60% { transform: scale(.95) rotate(4deg); } }
+  body.gm #sendFab { opacity: 0; visibility: hidden; }
+  .sendc { max-height: 44vh; }
+  .kgrid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .kgrid .gc.sm { flex: none; width: auto; padding: 6px 2px 5px; font-size: 24px; }
+  .kgrid .gc.sm small { font-size: 9px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .swrow { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
+  .swrow span { font-size: 12.5px; font-weight: 900; margin-right: auto; }
+  .sw { width: 29px; height: 29px; flex: 0 0 29px; border-radius: 50%; background: var(--s); border: 2.5px solid var(--ink); cursor: pointer; padding: 0; box-shadow: 0 2px 0 var(--ink); transition: transform .15s; }
+  .sw.on { transform: scale(1.18); box-shadow: 0 0 0 3px #fff, 0 0 0 5.5px var(--ink); }
+  #gctl .sendc .inp { margin-top: 6px; width: 100%; display: block; }
+  .msgw { position: relative; }
+  .msgw .inp { padding-right: 58px; }
+  .msgw small { position: absolute; right: 12px; top: 50%; margin-top: 3px; transform: translateY(-50%); font-size: 11px; font-weight: 800; opacity: .5; }
+  .tpls { display: flex; gap: 6px; overflow-x: auto; margin-top: 8px; padding-bottom: 2px; scrollbar-width: none; touch-action: pan-x; }
+  .tpl { flex: 0 0 auto; font: inherit; font-size: 12.5px; font-weight: 800; color: var(--ink); background: #fff4f8; border: 2px solid rgba(59,39,64,.25); border-radius: 99px; padding: 6px 11px; cursor: pointer; }
+  .tpl:active { transform: scale(.94); background: #ffd6e6; }
+  .gcard.res p.sent { font-size: 12.5px; background: #fff4f8; border-radius: 10px; padding: 5px 8px; margin-top: 8px; }
+  .gc.big2 { font-size: 17px; padding: 13px 14px; }
+  .xopt { margin-top: 10px; padding-top: 9px; border-top: 2px dashed rgba(59,39,64,.14); }
+  .xopt > b { display: block; font-size: 13px; font-weight: 900; margin-bottom: 6px; }
+  .xrow { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+  .xrow .gc.sm { flex: none; width: auto; padding: 5px 1px 4px; font-size: 21px; }
+  .xrow .gc.sm small { font-size: 8.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .xtog { display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 700; cursor: pointer; line-height: 1.3; }
+  .xtog input { width: 22px; height: 22px; flex: 0 0 22px; accent-color: #ff5c93; margin: 0; }
+  .xtog b { font-weight: 900; }
+  #gctl .sendc .inp.ok { background: #effbf3; }
   @keyframes env { 0%,80%,100% { transform: rotate(0); } 85% { transform: rotate(-14deg) scale(1.1); } 92% { transform: rotate(12deg) scale(1.1); } }
   #meBtn.new::after { content: ''; position: absolute; top: -4px; right: -4px; width: 13px; height: 13px; border-radius: 50%; background: #ff4f6d; border: 2.5px solid var(--ink); animation: pop .5s; }
   body.gm .side { opacity: 0; visibility: hidden; }
@@ -373,7 +431,7 @@
 
   <header class="hud">
     <div class="brand">
-      <b>MOODI</b><span>жинхэнэ нэр нь Ариук 🌱</span>
+      <b>MOODI</b><span>чиний жижигхэн найз 💚</span>
       <div class="love" aria-label="найрамдал">
         <span class="heart" id="heart">❤️</span><div class="bar"><i id="loveBar"></i></div><small id="loveLbl">найз</small>
       </div>
@@ -391,8 +449,8 @@
 
   <div class="side">
     <button id="meBtn" aria-label="чи ба Moodi"><i>🫶</i><span>БИ</span></button>
-    <button id="sendBtn" aria-label="найздаа захиа илгээх"><i>💌</i><span>ЗАХИА</span></button>
   </div>
+  <button id="sendFab" aria-label="найздаа Moodi илгээх"><i>💌</i><span>Найздаа<br>илгээх</span><em>NEW</em></button>
   <div id="tray" role="menu" aria-label="хоол сонгох"></div>
   <nav class="dock">
     <button data-act="pet" aria-label="илбэх"><i>🫳</i><span>ИЛБЭХ</span></button>
@@ -414,7 +472,7 @@
     </div>
   </div>
 
-  <div id="splash"><div class="logo"><div class="blob"><i></i><i></i></div><b>MOODI</b><small id="splashTxt">Ариук сэрж байна... 🌱</small></div></div>
+  <div id="splash"><div class="logo"><div class="blob"><i></i><i></i></div><b>MOODI</b><small id="splashTxt">Moodi сэрж байна... 🌱</small></div></div>
 
 <script type="module">
 import * as THREE from 'three';
@@ -1352,7 +1410,7 @@ function onLand(impact) {
 function startIdle() {
   S.nextIdle = T + rand(4.5, 8);
   if (ME.likes.length && Math.random() < .14 && likeIdle()) return; // чиний дуртай зүйлсийг санаж ярина
-  if (Math.random() < .05) { S.action = { type: 'look', t0: T, dur: 2.4 }; setEmotion('shy', 2.2, true); say(pick(['Нууц: миний жинхэнэ нэр Ариук 🤫🌱', 'Ариук гэж дуудвал би их баярладаг 🥺💚', 'Moodi бол зүгээр л хоч. Би Ариук 😚']), 2.4); return; }
+  if (Math.random() < .07 && !S.sleeping) { sendNudge(); return; } // найздаа илгээхийг сануулна 💌
   const type = pick(['wave', 'walk', 'teeter', 'stare', 'dance', 'look', 'yawn', 'walk', 'fart', 'sneeze', 'hiccup']);
   S.action = { type, t0: T, dur: 2.5 };
   switch (type) {
@@ -2914,16 +2972,21 @@ const JOKES = [
   'Би математикт гаргууд. 1 жигнэмэг + 1 жигнэмэг = 0 жигнэмэг. Идчихсэн 🍪',
 ];
 const KIND_WORDS = ['Гунигтай байх зүгээр шүү. Чи хүн шүү дээ 💙', 'Би чамайг сонсож байна 🫂', 'Энэ өдөр өнгөрнө. Чи давж чадна 🌤️', 'Чи надад маш чухал 💚'];
-const KINDS = [
-  { id: 'hug', e: '🤗', n: 'Тэврэлт', m: 'Чамайг чанга тэвэрлээ! 🤗' },
-  { id: 'love', e: '💘', n: 'Хайр', m: 'Чи надад маш их хайртай хүн шүү 💘' },
-  { id: 'bday', e: '🎂', n: 'Төрсөн өдөр', m: 'Төрсөн өдрийн мэнд хүргэе!! 🥳' },
-  { id: 'cheer', e: '💪', n: 'Урам', m: 'Чи чадна! Би чамд итгэж байна 💪' },
-  { id: 'sorry', e: '🙏', n: 'Уучлаарай', m: 'Уучлаарай... эвлэрэх үү? 🥺' },
-  { id: 'lol', e: '😂', n: 'Наргиа', m: 'Чамайг санаад инээд хүрлээ 😂' },
-  { id: 'dance', e: '💃', n: 'Бүжиг', m: 'Чамд зориулж бүжиглэлээ! 💃' },
-  { id: 'miss', e: '🥺', n: 'Санасан', m: 'Чамайг их санаж байна 🥺' },
+const KINDS = [ // t: бэлэн захианы загварууд (дарахад шууд бичигдэнэ)
+  { id: 'hug', e: '🤗', n: 'Тэврэлт', m: 'Чамайг чанга тэвэрлээ! 🤗', t: ['Чамайг чанга тэвэрлээ! 🤗', 'Хэцүү үед би чиний хажууд 🫂', 'Виртуал тэврэлт хүргэе 🤗💞'] },
+  { id: 'love', e: '💘', n: 'Хайр', m: 'Чи надад маш их хайртай хүн шүү 💘', t: ['Чи надад маш их хайртай хүн шүү 💘', 'Чамгүйгээр өдөр минь уйтгартай 🥺💗', 'Чи бол миний нар ☀️💘'] },
+  { id: 'bday', e: '🎂', n: 'Төрсөн өдөр', m: 'Төрсөн өдрийн мэнд хүргэе!! 🥳', t: ['Төрсөн өдрийн мэнд хүргэе!! 🥳', 'Хүсэл бүхэн чинь биелээрэй 🎂✨', 'Чи төрсөнд дэлхий азтай 💖'] },
+  { id: 'cheer', e: '💪', n: 'Урам', m: 'Чи чадна! Би чамд итгэж байна 💪', t: ['Чи чадна! Би чамд итгэж байна 💪', 'Шалгалтандаа амжилт!! 📚🔥', 'Бууж өгөх хэрэггүй, чи шилдэг 🌟'] },
+  { id: 'thanks', e: '🌷', n: 'Баярлалаа', m: 'Баярлалаа!! Чи хамгийн шилдэг нь 💐', t: ['Баярлалаа!! Чи хамгийн шилдэг нь 💐', 'Надад тусалсанд баярлалаа 🙏💛', 'Чи байгаад би азтай 🍀'] },
+  { id: 'sorry', e: '🙏', n: 'Уучлаарай', m: 'Уучлаарай... эвлэрэх үү? 🥺', t: ['Уучлаарай... эвлэрэх үү? 🥺', 'Би буруу байсан. Уучлаарай 🙏', 'Гомдоосондоо харамсаж байна 🩹'] },
+  { id: 'lol', e: '😂', n: 'Наргиа', m: 'Чамайг санаад инээд хүрлээ 😂', t: ['Чамайг санаад инээд хүрлээ 😂', 'Чи бол хамгийн хөгжилтэй хүн 🤣', 'Энэ Moodi чамайг инээлгэх үүрэгтэй 😜'] },
+  { id: 'dance', e: '💃', n: 'Бүжиг', m: 'Чамд зориулж бүжиглэлээ! 💃', t: ['Чамд зориулж бүжиглэлээ! 💃', 'Баяр хөөртэй өдөр болоорой 🕺🎶', 'Хамт бүжиглэцгээе!! 🪩'] },
+  { id: 'miss', e: '🥺', n: 'Санасан', m: 'Чамайг их санаж байна 🥺', t: ['Чамайг их санаж байна 🥺', 'Хэзээ уулзах вэ? 👉👈', 'Чамайг бодоод л байна 💭'] },
+  { id: 'night', e: '🌙', n: 'Амраарай', m: 'Сайхан амраарай 🌙', t: ['Сайхан амраарай 🌙', 'Сайхан зүүдлээрэй ✨😴', 'Маргааш уулзъя 🌙💤'] },
 ];
+// найздаа илгээх Moodi-гийн өнгө 🎨
+const GIFTS = [{ id: 'flower', e: '💐', n: 'Цэцэг' }, { id: 'cake', e: '🍰', n: 'Бялуу' }, { id: 'bear', e: '🧸', n: 'Баавгай' }, { id: 'star', e: '🌟', n: 'Од' }, { id: 'choco', e: '🍫', n: 'Шоколад' }, { id: 'heart', e: '💖', n: 'Зүрх' }];
+const MCOL = [{ id: 'mint', c: '#9fe6cc' }, { id: 'pink', c: '#ffb3cc' }, { id: 'lav', c: '#c8b6f7' }, { id: 'peach', c: '#ffc896' }, { id: 'sky', c: '#9fd6ff' }, { id: 'lemon', c: '#f3ea7f' }];
 
 /* ── захиаг линк дотор хадгална (сервер хэрэггүй) ── */
 const b64e = s => btoa(String.fromCharCode(...new TextEncoder().encode(s))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
@@ -2933,7 +2996,11 @@ function readLetter() {
   const m = location.hash.match(/[#&]m=([\w-]+)/); if (!m) return null;
   try {
     const d = JSON.parse(b64d(m[1]));
-    const L = { f: clean(d.f, 20) || 'Нууц найз', t: clean(d.t, 20), m: clean(d.m, 140), k: KINDS.some(k => k.id === d.k) ? d.k : 'hug' };
+    const L = { f: clean(d.f, 20) || 'Найз', t: clean(d.t, 20), m: clean(d.m, 140), k: KINDS.some(k => k.id === d.k) ? d.k : 'hug', c: MCOL.some(c => c.id === d.c) ? d.c : '',
+      g: GIFTS.some(x => x.id === d.g) ? d.g : '',
+      qq: clean(d.qq, 70), qa: clean(d.qa, 24), qw: Array.isArray(d.qw) ? d.qw.map(x => clean(x, 24)).filter(Boolean).slice(0, 2) : [],
+      o: /^\d{4}-\d\d-\d\d$/.test(d.o || '') ? d.o : '' };
+    if (!L.qq || !L.qa || !L.qw.length) L.qq = '';
     return L.m ? L : null;
   } catch (e) { return null; }
 }
@@ -3094,6 +3161,25 @@ function performAct(k) {
       for (let i = 0; i < 8; i++) setTimeout(() => fx(pick(['🎵', '🎶', '✨']), { size: 24 }), i * 400);
       say('Чамд зориулсан бүжиг! 💃🕺', 2, true);
       return 4200;
+    case 'thanks': { // 💐 цэцгийн баглаа барьж бөхийнө
+      setEmotion('love', 3, true); VOC.yay(); say('Баярлалаа!! 💐', 1.8, true);
+      const from = headTop().add(_a.set(0, -1.1, .9));
+      floatSprite(emojiTex('💐'), from, .8, 3, (f, dt, k) => { f.o.position.copy(body.getWorldPosition(_b)).add(_a.set(0, -.45, 1.3)); f.o.material.rotation = Math.sin(T * 3) * .1; f.o.material.opacity = k > .85 ? (1 - k) / .15 : 1; });
+      homePose(() => ({ armL: 1.1, armR: 1.1, fwdL: 1.6, fwdR: 1.6 }), 1.6);
+      gLater(() => { homePose(() => ({ rx: .45, ez: .2, armL: 1.1, armR: 1.1, fwdL: 1.6, fwdR: 1.6 }), 1.2); setEmotion('shy', 1.6, true); }, 1600);
+      confetti3D(14, ['🌷', '🌸', '💛', '✨']);
+      return 3200;
+    }
+    case 'night': { // 🌙 сар, од, бүүвэй
+      setEmotion('sleepy', 4.5, true); VOC.yawn(); say('Сайхан амраарай~ 🌙', 2, true);
+      const h = headTop();
+      const still = (dx, dy, e, sz, ph) => floatSprite(emojiTex(e), _a.set(h.x + dx, h.y + dy, -.2).clone(), sz, 4.4, (f, dt, k) => { f.o.material.opacity = Math.min(1, k * 5, (1 - k) * 5) * (.6 + Math.sin(T * 3 + ph) * .4); });
+      still(-1.2, .5, '🌙', .8, 0); still(1.3, .7, '⭐', .32, 1); still(1.7, -.1, '✨', .3, 2); still(-1.8, -.2, '✨', .28, 3);
+      homePose(() => ({ rz: Math.sin(T * 1.6) * .12, armL: .4, armR: .4 }), 4.2);
+      gLater(() => VOC.hum(), 1600);
+      gLater(() => { setEmotion('sleep', 1.5, true); say('Zzz... 💤', 1.2, true); }, 3000);
+      return 4400;
+    }
     case 'miss':
     default:
       setEmotion('sad', 1.6, true); VOC.cry(); say('Чамайг санаад... 🥺', 1.6, true);
@@ -3147,7 +3233,7 @@ function meetScene(after) {
     blurInputs(); setName(n); buzz([15, 30, 15]);
     boardRe(sign, signTex([`✨ ${n} ✨`], '#ffe3ee'));
     setEmotion('love', 2.4, true); VOC.yay(); jump(6); confetti3D(18);
-    say(pick([`${n}!! Ямар гоё нэр вэ 😍`, `${n} ба Ариук... гоё хослол 🥰`, `${n}! Одоо би чамайг санаж байна 💖`]), 2.2);
+    say(pick([`${n}!! Ямар гоё нэр вэ 😍`, `${n} ба Moodi... гоё хослол 🥰`, `${n}! Одоо би чамайг санаж байна 💖`]), 2.2);
     gLater(stepBday, 2300);
   };
   c$('#mOk').onclick = okName; onEnter(inp, okName);
@@ -3243,9 +3329,11 @@ function moodScene() {
 function moodDone(m, line) {
   addLove(5); G.poseFn = null; G.targets = []; G.onDown = () => true;
   ctl(`<div class="gcard res"><div class="big">${m.e}</div><b>Өнөөдрийн тэмдэглэл хадгалагдлаа 📅</b><p>${line}</p></div>
-    <button class="gc" id="mCal">📅 Миний календарь</button><button class="gc" id="mHome" style="--c:#d4f5e6">🏠 Буцах</button>`);
+    <button class="gc wide" id="mSend" style="--c:#ffd6e6">💌 ${MOOD_SEND[m.id][1]}</button><button class="gc" id="mCal" style="flex:1">📅 Календарь</button><button class="gc" id="mHome" style="--c:#d4f5e6;flex:1">🏠 Буцах</button>`);
+  c$('#mSend').onclick = () => sendScene('', MOOD_SEND[m.id][0]);
   c$('#mCal').onclick = () => meScene(); c$('#mHome').onclick = () => { exitScene(); setEmotion('happy', 1.5); say(pick(['Би энд байна шүү 💚', 'Хүссэн үедээ над руу ир 😊']), 1.8); };
 }
+const MOOD_SEND = { great: ['dance', 'Энэ баяраа найздаа хуваалц'], ok: ['lol', 'Найзаа инээлгэх'], sad: ['miss', 'Дотны найздаа захиа бичих'], angry: ['hug', 'Найздаа тэврэлт илгээх'], tired: ['night', 'Найздаа “сайхан амраарай” илгээх'], worry: ['cheer', 'Найздаа урам өгөх'] };
 const tapMoodi = fn => { G.targets = [body]; G.onDown = hit => { if (hit) fn(); return true; }; };
 const MOOD_RX = {
   great(m) { // 🤩 бүжиг + конфетти + алга ташилт
@@ -3407,7 +3495,8 @@ function meScene() {
   let bdTxt = '🎂 Төрсөн өдөр: —', zTxt = '✨ Орд: —';
   if (ME.bd) { const [m, d] = ME.bd.split('-').map(Number), z = zodiac(m, d); bdTxt = `🎂 ${m}/${d} · ${dl === 0 ? 'ӨНӨӨДӨР! 🥳' : dl + ' хоног'}`; zTxt = `${z[3]} ${z[2]}`; }
   const now = new Date(); let cy = now.getFullYear(), cm = now.getMonth();
-  ctl(`<div class="gcard tall"><div class="mstat"><div>🗓️ Хамт <b>${together}</b> өдөр</div><div>🔥 Дараалал <b>${STREAK}</b></div><div>${bdTxt}</div><div>${zTxt}</div></div>
+  ctl(`<div class="gcard tall"><div class="mstat"><div>🗓️ Хамт <b>${together}</b> өдөр</div><div>🔥 Дараалал <b>${STREAK}</b></div><div>💌 Илгээсэн <b>${+store.get('moodi-sent', 0) || 0}</b></div><div>🫶 Тэмдэглэл <b>${Object.keys(MOODLOG).length}</b></div><div>${bdTxt}</div><div>${zTxt}</div></div>
+      ${lockedCount() ? `<div class="sent" style="margin-top:8px;text-align:center;font-weight:900;font-size:13px">🔒 ${lockedCount()} түгжээтэй захиа хүлээж байна</div>` : ''}
       ${ME.likes.length ? `<div class="mlikes">${ME.likes.map(id => (LIKES.find(l => l.id === id) || {}).e || '').join(' ')}</div>` : ''}
       <div id="calBox"></div></div>
     <button class="gc" id="meMood" style="--c:#fff3c4">🫶 Өнөөдөр</button><button class="gc" id="meEdit">✏️ Засах</button><button class="gc" id="meSend" style="--c:#ffd6e6">💌 Захиа</button>`);
@@ -3429,99 +3518,374 @@ function meScene() {
 }
 
 /* ═══ 💌 НАЙЗДАА MOODI ИЛГЭЭХ ═══ */
-function sendScene(prefTo = '') {
-  openScene('send', '💌 Найздаа Moodi илгээх', 'Moodi захиаг чинь хүргэнэ');
+function sendScene(prefTo = '', prefKind = '') {
+  openScene('send', '💌 Найздаа Moodi илгээх', 'Алхам 1/2 · Юу илгээх вэ?');
   G.viewOff = innerHeight * .17;
-  let kind = KINDS[0], busyT = 0;
-  const sign = board(signTex(['💌', prefTo ? `→ ${prefTo}` : 'Хэнд?'], '#ffd6e6'), 1.4, .7);
+  let kind = KINDS.find(k => k.id === prefKind) || KINDS[0], col = MCOL[0], busyT = 0, to = clean(prefTo, 20), msg = '', fromV = '';
+  let gift = null, quiz = false, qq = '', qa = '', qw = ['', ''], openOn = '';
+  const tint = new THREE.Color(col.c); G.tint = tint;
+  const signFor = () => signTex([kind.e + ' 💌', to ? `→ ${to}` : 'Хэнд?'], '#fff');
+  const sign = board(signFor(), 1.4, .7);
   setTick(() => { holdBoard(sign); sign.visible = T > busyT; });
   G.poseFn = HOLD;
-  setEmotion('cheerful', 2); say('Хэнд захиа явуулах вэ? 💌 Би хүргээд өгье!', 2.2);
-  ctl(`${KINDS.map((k, i) => `<button class="gc sm q4 kd ${i ? '' : 'on'}" data-i="${i}">${k.e}<small>${k.n}</small></button>`).join('')}
-    <input class="inp" id="sTo" maxlength="20" placeholder="Хэнд? (найзын нэр)" autocomplete="off" value="${esc(prefTo)}">
-    <input class="inp" id="sMsg" style="flex:1 1 100%" maxlength="140" placeholder="${esc(KINDS[0].m)}" autocomplete="off">
-    ${userName ? '' : '<input class="inp" id="sFrom" maxlength="20" placeholder="Чиний нэр" autocomplete="off">'}
-    <button class="gc" id="sPrev">👀 Харах</button><button class="gc" id="sGo" style="--c:#ffd6e6">📤 Илгээх</button>`);
-  const to = c$('#sTo'), msg = c$('#sMsg');
-  const preview = () => { busyT = T + performAct(kind.id) / 1000; G.poseFn = null; gLater(() => { if (G.mode === 'send') { G.poseFn = HOLD; hatOn(false); } }, (busyT - T) * 1000); };
-  to.addEventListener('input', () => { const v = clean(to.value, 20); boardRe(sign, signTex(['💌', v ? `→ ${v}` : 'Хэнд?'], '#ffd6e6')); tick(v.length % 6); });
-  gctl.querySelectorAll('.kd').forEach(b => b.onclick = () => {
-    gctl.querySelectorAll('.kd').forEach(x => x.classList.remove('on')); b.classList.add('on');
-    kind = KINDS[+b.dataset.i]; msg.placeholder = kind.m; buzz(6); sfx.pop(); preview();
-  });
-  c$('#sPrev').onclick = () => { buzz(6); preview(); };
-  c$('#sGo').onclick = () => {
-    const from = userName || clean(c$('#sFrom') && c$('#sFrom').value, 20);
-    const t = clean(to.value, 20), m = clean(msg.value, 140) || kind.m;
-    if (!from) { c$('#sFrom').focus(); say('Чиний нэрийг бичээрэй 🥺', 1.4); return; }
+  setEmotion('cheerful', 2); say(prefTo ? `${prefTo}-д хариу явуулъя! 💌` : 'Найздаа намайг илгээгээрэй! Би хүргээд өгье 💌', 2.4);
+  const preview = () => { busyT = T + performAct(kind.id) / 1000; gLater(() => { if (G.mode === 'send') { G.poseFn = HOLD; hatOn(false); if (CAKE) CAKE.visible = false; } }, (busyT - T) * 1000); };
+  // 1) юу илгээх + Moodi-гийн өнгө
+  function step1() {
+    setScore('Алхам 1/2 · Юу илгээх вэ?');
+    ctl(`<div class="gcard sendc"><b>💌 Найздаа юу илгээх вэ?</b>
+        <div class="kgrid">${KINDS.map((k, i) => `<button class="gc sm kd ${k === kind ? 'on' : ''}" data-i="${i}">${k.e}<small>${k.n}</small></button>`).join('')}</div>
+        <div class="swrow"><span>🎨 Өнгө</span>${MCOL.map((c, i) => `<button class="sw ${c === col ? 'on' : ''}" data-i="${i}" style="--s:${c.c}" aria-label="өнгө ${i + 1}"></button>`).join('')}</div></div>
+      <button class="gc wide" id="sNext" style="--c:#ffd6e6">Дараах: захиа бичих ✍️</button>`);
+    gctl.querySelectorAll('.kd').forEach(b => b.onclick = () => {
+      gctl.querySelectorAll('.kd').forEach(x => x.classList.remove('on')); b.classList.add('on');
+      if (kind.t.includes(msg)) msg = '';
+      kind = KINDS[+b.dataset.i];
+      boardRe(sign, signFor()); buzz(6); sfx.pop(); preview();
+    });
+    gctl.querySelectorAll('.sw').forEach(b => b.onclick = () => {
+      gctl.querySelectorAll('.sw').forEach(x => x.classList.remove('on')); b.classList.add('on');
+      const i = +b.dataset.i; col = MCOL[i]; tint.set(col.c); buzz(6); squash(3); jump(4); tone(600 + i * 80, 900 + i * 80, .08, 'sine', .07);
+      say(pick(['Энэ өнгө надад зохиж байна уу? 😳', 'Шинэ өнгө! 💅', 'Ваа гоё юм 🥰']), 1.2);
+    });
+    c$('#sNext').onclick = () => { buzz(8); sfx.pop(); step2(); };
+  }
+  // 2) хэнд + захиа (бэлэн загвартай)
+  function step2() {
+    setScore('Алхам 2/2 · Захиагаа бич');
+    ctl(`<div class="gcard sendc"><b>${kind.e} Захиагаа бичээрэй ✍️</b>
+        <input class="inp" id="sTo" maxlength="20" placeholder="Хэнд? (найзын нэр)" autocomplete="off" value="${esc(to)}">
+        <div class="msgw"><input class="inp" id="sMsg" maxlength="140" placeholder="${esc(kind.m)}" autocomplete="off" value="${esc(msg)}"><small id="sCnt"></small></div>
+        <div class="tpls">${kind.t.map((t, i) => `<button class="tpl" data-i="${i}">${esc(t)}</button>`).join('')}</div>
+        ${userName ? '' : '<input class="inp" id="sFrom" maxlength="20" placeholder="Чиний нэр (хэнээс)" autocomplete="off">'}</div>
+      <button class="gc" id="sBack">‹</button><button class="gc" id="sExtra" style="--c:#fff0b8;flex:1">✨ Гэнэтийн зүйл</button><button class="gc" id="sGo" style="--c:#ffd6e6;flex:1">📤 Илгээх</button>`);
+    const iTo = c$('#sTo'), iMsg = c$('#sMsg'), cnt = c$('#sCnt');
+    const upCnt = () => { cnt.textContent = `${iMsg.value.length}/140`; };
+    upCnt();
+    iTo.addEventListener('input', () => { to = clean(iTo.value, 20); boardRe(sign, signFor()); tick(to.length % 6); });
+    iMsg.addEventListener('input', () => { msg = iMsg.value; upCnt(); if (Math.random() < .3) squash(1); });
+    gctl.querySelectorAll('.tpl').forEach(b => b.onclick = () => { iMsg.value = msg = kind.t[+b.dataset.i]; upCnt(); buzz(6); sfx.pop(); setEmotion('happy', 1, true); });
+    if (c$('#sFrom')) { c$('#sFrom').value = fromV; c$('#sFrom').addEventListener('input', e => { fromV = e.target.value; }); }
+    c$('#sBack').onclick = () => { buzz(6); step1(); };
+    c$('#sExtra').onclick = () => { buzz(6); sfx.pop(); step3(); };
+    c$('#sGo').onclick = () => go();
+  }
+  // 3) ✨ гэнэтийн зүйл: 🎁 бэлэг · 🕵️ нэргүй · 🔒 тодорхой өдөр
+  function step3() {
+    setScore('✨ Гэнэтийн зүйл (заавал биш)');
+    const tmr = dayKey(new Date(Date.now() + 864e5));
+    ctl(`<div class="gcard sendc"><b>✨ Найзаа гайхшруулах уу?</b>
+        <div class="xopt"><b>🎁 Бэлгийн хайрцагт хийх</b><div class="xrow">${[null, ...GIFTS].map((g, i) => `<button class="gc sm gf ${g === gift ? 'on' : ''}" data-i="${i}">${g ? g.e : '✖️'}<small>${g ? g.n : 'Үгүй'}</small></button>`).join('')}</div></div>
+        <div class="xopt"><label class="xtog"><input type="checkbox" id="xQuiz" ${quiz ? 'checked' : ''}><span>🧩 <b>Асуулттай захиа</b>: зөв хариулбал л нээгдэнэ</span></label>
+          <div id="xQ"><input class="inp" id="xQq" maxlength="70" placeholder="Асуулт: Бид хаана анх уулзсан бэ? 🤔" value="${esc(qq)}">
+            <input class="inp ok" id="xQa" maxlength="24" placeholder="✅ Зөв хариулт" value="${esc(qa)}">
+            <input class="inp" id="xQw1" maxlength="24" placeholder="❌ Буруу хариулт 1" value="${esc(qw[0])}"><input class="inp" id="xQw2" maxlength="24" placeholder="❌ Буруу хариулт 2" value="${esc(qw[1])}"></div></div>
+        <div class="xopt"><label class="xtog"><input type="checkbox" id="xLock" ${openOn ? 'checked' : ''}><span>🔒 <b>Тодорхой өдөр</b> нээгдэх (төрсөн өдөр г.м.)</span></label>
+          <input class="inp" type="date" id="xDate" min="${tmr}" value="${openOn || tmr}"></div></div>
+      <button class="gc" id="sBack2">‹</button><button class="gc" id="sGo" style="--c:#ffd6e6;flex:1">📤 Илгээх</button>`);
+    const qbox = c$('#xQ'), dt = c$('#xDate');
+    const sync = () => { qbox.style.display = quiz ? '' : 'none'; dt.style.display = openOn ? '' : 'none'; };
+    sync();
+    gctl.querySelectorAll('.gf').forEach(b => b.onclick = () => {
+      gctl.querySelectorAll('.gf').forEach(x => x.classList.remove('on')); b.classList.add('on');
+      gift = [null, ...GIFTS][+b.dataset.i]; buzz(6); sfx.pop();
+      if (gift) { floatSprite(emojiTex('🎁'), headTop().add(_a.set(0, .3, .4)), .7, 1.4); setEmotion('happy', 1.4, true); say(`${gift.e} ${gift.n}-ийг хайрцагт хийлээ 🎁`, 1.6); jump(4); }
+    });
+    c$('#xQuiz').onchange = e => {
+      quiz = e.target.checked; sync(); buzz(6);
+      if (quiz) { setEmotion('suspicious', 1.8, true); say('Хэхэ, найз чинь чамайг сайн мэдэх үү? 🧩', 1.8); c$('#xQq').focus(); }
+    };
+    c$('#xQq').oninput = e => { qq = e.target.value; }; c$('#xQa').oninput = e => { qa = e.target.value; };
+    c$('#xQw1').oninput = e => { qw[0] = e.target.value; }; c$('#xQw2').oninput = e => { qw[1] = e.target.value; };
+    c$('#xLock').onchange = e => { openOn = e.target.checked ? (dt.value || tmr) : ''; sync(); buzz(6); if (openOn) { setEmotion('shocked', 1.2, true); say('🔒 Тэр өдөр л нээгдэнэ!', 1.5); } };
+    dt.onchange = () => { if (c$('#xLock').checked) openOn = dt.value < tmr ? tmr : dt.value; };
+    c$('#sBack2').onclick = () => { buzz(6); step2(); };
+    c$('#sGo').onclick = () => go();
+  }
+  function go() {
+    const from = userName || clean(fromV, 20);
+    const m = clean(msg, 140) || kind.m;
+    if (!from) { if (!c$('#sFrom')) step2(); c$('#sFrom').focus(); say('Чиний нэрийг бичээрэй 🥺', 1.4); return; }
     if (!userName) setName(from);
+    const data = { f: from, t: to, m, k: kind.id }; if (col.id !== 'mint') data.c = col.id;
+    if (gift) data.g = gift.id;
+    if (quiz) {
+      const w = qw.map(x => clean(x, 24)).filter(Boolean);
+      if (!clean(qq, 70) || !clean(qa, 24) || !w.length) { step3(); say('Асуулт, зөв хариулт, дор хаяж 1 буруу хариултаа бичээрэй 🧩', 2.2); return; }
+      data.qq = clean(qq, 70); data.qa = clean(qa, 24); data.qw = w;
+    }
+    if (openOn) data.o = openOn;
     blurInputs(); buzz([15, 30]); if (CAKE) CAKE.visible = false; hatOn(false);
-    const url = location.href.split('#')[0] + '#m=' + b64e(JSON.stringify({ f: from, t, m, k: kind.id }));
-    const text = `${t ? t + ', ч' : 'Ч'}амд Moodi захиа авчирлаа 💌 Нээгээд үзээрэй 👇`;
-    // Moodi захиагаа тэвэрч аваад тэнгэр өөд нисгэнэ 🕊️
-    boardRe(sign, envTex(), 1.1, .78); busyT = 0;
-    setEmotion('happy', 2, true); VOC.yay(); jump(6);
+    const url = location.href.split('#')[0] + '#m=' + b64e(JSON.stringify(data));
+    const text = `${to ? to + ', ч' : 'Ч'}амд Moodi ${gift ? 'бэлэг 🎁' : 'захиа ' + kind.e + '💌'} ирлээ!${quiz ? ' 🧩 Асуултад зөв хариулбал л нээгдэнэ!' : ''}${openOn ? ` 🔒 ${fmtDay(openOn)}-нд нээгдэнэ.` : ''} Нээгээд үзээрэй 👇`;
+    const sent = (+store.get('moodi-sent', 0) || 0) + 1; store.set('moodi-sent', sent);
+    // Moodi захиагаа тэнгэр өөд нисгэнэ 🕊️
+    busyT = 0; setEmotion('happy', 2, true); VOC.yay(); jump(6);
     const fly = sign.position.clone(); sign.visible = false;
     floatSprite(envTex(), fly, 1, 1.6, (f, dt, k) => { f.o.position.y += dt * (2 + k * 6); f.o.position.x += Math.sin(k * 12) * dt * 2; f.o.scale.set(1.1 * (1 - k * .5), .78 * (1 - k * .5), 1); f.o.material.rotation = Math.sin(k * 10) * .3; });
+    for (let i = 0; i < 6; i++) setTimeout(() => fx(pick(['💌', '💖', '✨']), { size: 22, dy: -160 }), 200 + i * 90);
     say('Хүргээд ирье! 📮💨', 1.6);
     setTick(() => {});
     G.poseFn = null; homePose(() => ({ armR: 2.6 + Math.sin(T * 12) * .45, rz: -.08 }), 2);
     const done = shared => {
-      ctl(`<div class="gcard res"><div class="big">${shared ? '✅' : '📮'}</div><b>${shared ? 'Илгээлээ!' : 'Захиа бэлэн боллоо!'}</b><p>Энэ линкийг найздаа явуулаарай. Нээмэгц Moodi гарч ирээд захиаг чинь хэлнэ 💌</p>
+      setScore(shared ? '✅ Илгээлээ' : '✅ Линк бэлэн');
+      ctl(`<div class="gcard res"><div class="big">${shared ? '✅' : '💌'}</div><b>${shared ? 'Илгээлээ!' : 'Захиа бэлэн! Одоо найздаа явуул'}</b>
+        <p>Найз чинь линкийг нээмэгц Moodi гарч ирээд захиаг чинь уншиж өгнө 🥰</p>
+        ${gift || quiz || openOn ? `<p class="sent">${gift ? gift.e + ' бэлэгтэй ' : ''}${quiz ? '🧩 асуулттай ' : ''}${openOn ? '🔒 ' + fmtDay(openOn) + '-нд нээгдэх ' : ''}захиа</p>` : ''}
+        <p class="sent">💌 Чи нийт <b>${sent}</b> удаа Moodi илгээлээ${sent >= 5 ? ' · Хайрын шуудан зөөгч 📮👑' : ''}</p>
         <input class="inp" id="sUrl" readonly value="${esc(url)}" style="font-size:12px;margin-top:8px;width:100%"></div>
-        <button class="gc" id="sCopy" style="--c:#fff0b8">📋 Хуулах</button>${navigator.share ? '<button class="gc" id="sShare" style="--c:#ffd6e6">📤 Хуваалцах</button>' : ''}<button class="gc" id="sHome">🏠 Буцах</button>`);
+        ${navigator.share ? '<button class="gc" id="sShare" style="--c:#ffd6e6;flex:1">📤 Хуваалцах</button>' : ''}<button class="gc" id="sCopy" style="--c:#fff0b8;flex:1">📋 Хуулах</button>
+        <button class="gc" id="sStory" style="flex:1">📸 Story</button><button class="gc" id="sMore" style="flex:1">💌 Дахин</button><button class="gc" id="sHome">🏠</button>`);
+      c$('#sStory').onclick = () => storyShot({ head: to ? `💌 → ${to}` : '💌 Найздаа Moodi илгээлээ', msg: m, e: gift ? gift.e : kind.e, c: col.id === 'mint' ? '' : col.id });
       c$('#sCopy').onclick = () => {
         const inp = c$('#sUrl'), ok = () => { c$('#sCopy').textContent = '✅ Хуулагдлаа!'; say('Хуулагдлаа! Одоо найздаа явуул 📲', 1.6); buzz(10); };
         if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(ok, () => { inp.select(); });
         else { inp.select(); try { document.execCommand('copy'); ok(); } catch (e) {} }
       };
       if (c$('#sShare')) c$('#sShare').onclick = () => navigator.share({ title: 'MOODI 💌', text, url }).catch(() => {});
+      c$('#sMore').onclick = () => sendScene('', kind.id);
       c$('#sHome').onclick = () => { exitScene(); setEmotion('happy', 1.5); say('Найз чинь баярлана даа 🥰', 1.8); };
     };
     if (navigator.share) navigator.share({ title: 'MOODI 💌', text, url }).then(() => done(true), () => done(false));
     else done(false);
     addLove(3);
-  };
+  }
+  step1();
+}
+// 💌 Moodi өөрөө "найз руугаа илгээ" гэж сануулна
+function sendNudge() {
+  S.action = { type: 'look', t0: T, dur: 2.8 };
+  setEmotion('shy', 2.4, true);
+  say(pick(['Найз руугаа намайг явуулах уу? 💌👉', 'Хэн нэгнийг баярлуулмаар байна 🥺💌', 'Би захиа зөөгч болмоор байна 📮']), 2.6);
+  floatSprite(emojiTex('💌'), headTop().add(_a.set(0, .35, .3)), .5, 2);
+  const f = $('#sendFab'); f.classList.remove('nudge'); void f.offsetWidth; f.classList.add('nudge');
 }
 
-/* ═══ 📬 ЗАХИА ХҮЛЭЭН АВАХ: дугтуй тэнгэрээс унаж, Moodi уншиж өгнө ═══ */
+/* ═══ 📬 ЗАХИА ХҮЛЭЭН АВАХ: дугтуй (эсвэл 🎁 бэлгийн хайрцаг) тэнгэрээс унаж, Moodi уншиж өгнө ═══ */
+const letterKey = L => String(hashStr(JSON.stringify([L.f, L.t, L.m, L.k, L.o])));
+const inbox = () => { const a = jget('moodi-inbox', []); return Array.isArray(a) ? a : []; };
+function inboxSave(L) { const a = inbox(), k = letterKey(L); if (!a.some(x => x.k === k)) { a.push({ k, L, opened: false }); store.set('moodi-inbox', JSON.stringify(a.slice(-20))); } }
+function inboxMark(L) { const a = inbox(), k = letterKey(L), x = a.find(x => x.k === k); if (x) { x.opened = true; store.set('moodi-inbox', JSON.stringify(a)); } }
+function inboxDue() { const t = dayKey(), x = inbox().find(x => !x.opened && x.L && x.L.o <= t); return x ? x.L : null; }
+const lockedCount = () => inbox().filter(x => !x.opened && x.L && x.L.o > dayKey()).length;
+const fmtDay = d => { const [, m, dd] = d.split('-').map(Number); return `${m} сарын ${dd}`; };
+// 🎁 3D бэлгийн хайрцаг (тууз, эрвээхэй зангиатай)
+function makeGiftBox() {
+  const g = new THREE.Group(), pinkM = toon('#ff8fb8'), ribM = toon('#ffe14d');
+  const box = outlined(new THREE.BoxGeometry(.72, .56, .72), pinkM, 1.05); box.position.y = .28;
+  const lid = new THREE.Group();
+  const lidM = outlined(new THREE.BoxGeometry(.82, .16, .82), pinkM, 1.06); lid.add(lidM);
+  const r1 = new THREE.Mesh(new THREE.BoxGeometry(.16, .17, .84), ribM), r2 = new THREE.Mesh(new THREE.BoxGeometry(.84, .17, .16), ribM); lid.add(r1, r2);
+  for (const s of [-1, 1]) { const bow = outlined(new THREE.SphereGeometry(.13, 14, 10), ribM, 1.1); bow.scale.set(1.3, .8, .6); bow.position.set(s * .13, .14, 0); bow.rotation.z = s * .5; lid.add(bow); }
+  lid.position.y = .64;
+  const b1 = new THREE.Mesh(new THREE.BoxGeometry(.16, .57, .74), ribM), b2 = new THREE.Mesh(new THREE.BoxGeometry(.74, .57, .16), ribM); b1.position.y = b2.position.y = .28;
+  g.add(box, b1, b2, lid); g.userData.lid = lid;
+  return sAdd(g);
+}
 function receiveScene(L, after) {
-  openScene('recv', '📬 Чамд захиа ирлээ!', `Хэнээс: ${L.f}`);
+  const today = dayKey();
+  if (L.o && L.o > today) return lockedScene(L, after);
+  inboxMark(L);
+  const gift = GIFTS.find(x => x.id === L.g);
+  openScene('recv', gift ? '🎁 Чамд бэлэг ирлээ!' : '📬 Чамд захиа ирлээ!', `Хэнээс: ${L.f}`);
+  if (L.c) G.tint = new THREE.Color(MCOL.find(c => c.id === L.c).c);
   G.viewOff = innerHeight * .08;
   G.onExit = () => { after && after(); };
+  const LL = () => L; let unlocked = !L.qq;
   const env = board(envTex(), 1.15, .81);
-  const start = new THREE.Vector3(S.x, topY + 1.5, 1.3), t0 = T; let state = 'fall';
+  let start = new THREE.Vector3(S.x, topY + 1.5, 1.3), t0 = T, state = gift ? 'gift' : 'fall', taps = 0, gSpr = null, box = null, lidV = 0;
+  if (gift) { env.visible = false; box = makeGiftBox(); box.position.set(S.x, topY + 1, 1.25); }
+  const landed = () => {
+    state = 'wait'; env.userData.pop = T - 1; G.poseFn = HOLD; squash(-3); sfx.thud(3); setEmotion('shocked', 1.4, true); VOC.gasp();
+    say(gift ? 'Дотор нь захиа байна!! 💌' : L.t ? `${L.t}! Чамд захиа ирлээ!! 📬` : 'Захиа ирлээ!! Чамд!! 📬', 2);
+    ctl(`<div class="gtip">💌 Захиаг <b>дарж</b> нээгээрэй</div>`); setScore(`Хэнээс: ${L.f} · 👆 Дар`);
+  };
   setTick(() => {
+    if (gSpr) { gSpr.position.set(S.x + 1.3, 1.55 + Math.sin(T * 2.2) * .08, .5); gSpr.material.rotation = Math.sin(T * 1.7) * .12; }
+    if (state === 'gift' || state === 'unwrap') {
+      const k = clamp((T - t0) / 1.1, 0, 1);
+      if (state === 'gift') {
+        box.position.y = (topY + 1) * (1 - k * k); box.position.x = S.x;
+        const w = Math.exp(-(T - (box.userData.hitT || -9)) * 8);
+        box.rotation.z = Math.sin(T * 40) * .12 * w; box.scale.set(1 + w * .12, 1 - w * .15, 1 + w * .12);
+        if (k >= 1 && !box.userData.down) {
+          box.userData.down = true; squash(-2); sfx.thud(4); setEmotion('shocked', 1.4, true); VOC.gasp(); G.lookAt = box.position;
+          say(L.t ? `${L.t}! Чамд бэлэг ирлээ!! 🎁` : 'БЭЛЭГ!! Чамд!! 🎁', 2);
+          ctl(`<div class="gtip">🎁 Хайрцгийг <b>5 удаа</b> дарж задлаарай!</div>`); setScore('🎁 0/5');
+        }
+      } else { // таг нисэж, бэлэг гарна
+        const u = T - t0, lid = box.userData.lid; // таг хажуу тийш нисээд алга болно
+        lid.position.set(u * 1.8, .64 + u * 3 - u * u * 4.5, 0); lid.rotation.z = -u * 6; lid.scale.setScalar(Math.max(.001, 1 - Math.max(0, u - .5) * 2.5));
+        const s = Math.max(.001, 1 - (T - t0 - 1) * 1.5); if (T - t0 > 1) box.scale.setScalar(s);
+        if (s <= .002) box.visible = false;
+      }
+      return;
+    }
     if (state === 'fall') {
       const k = clamp((T - t0) / 1.4, 0, 1); body.getWorldPosition(_v);
       env.position.lerpVectors(start, _a.set(_v.x, _v.y - .67, _v.z + 1.3), 1 - Math.pow(1 - k, 3));
       env.position.x += Math.sin(k * 14) * .4 * (1 - k); env.material.rotation = Math.sin(k * 12) * .35 * (1 - k);
       env.scale.set(1.15, .81, 1);
-      if (k >= 1) { state = 'wait'; env.userData.pop = T - 1; G.poseFn = HOLD; squash(-3); sfx.thud(3); setEmotion('shocked', 1.4, true); VOC.gasp(); say(L.t ? `${L.t}! Чамд захиа ирлээ!! 📬` : 'Захиа ирлээ!! Чамд!! 📬', 2);
-        ctl(`<div class="gtip">💌 Захиаг <b>дарж</b> нээгээрэй</div>`); setScore(`Хэнээс: ${L.f} · 👆 Дар`); }
+      if (k >= 1) landed();
     } else holdBoard(env, state === 'open' ? .3 : .38);
   });
   G.lookAt = env.position;
   G.onDown = () => {
+    if (state === 'gift') {
+      if (!box.userData.down) return true;
+      taps++; box.userData.hitT = T; buzz(15); sfx.pop(); setScore(`🎁 ${taps}/5`);
+      fx(pick(['✨', '🎀', '💖']), { size: 24 });
+      if (taps < 5) { say(pick(['Юу байгаа бол?! 👀', 'Хурдан!! 😆', 'Ммм... 🤔', 'Бараг!!']), .9, true); squash(2); return true; }
+      state = 'unwrap'; t0 = T; lidV = 3; ctl(''); G.lookAt = null;
+      utter(a => a.noise(0, .1, 2000, .7, .6)); VOC.wow(); buzz([20, 40, 60]); confetti3D(30, ['🎉', '🎊', '✨', gift.e]);
+      gSpr = sAdd(makeSprite(emojiTex(gift.e), 1.0, false)); gSpr.position.set(S.x, .7, 1.3);
+      setEmotion('hyper', 2.4, true); jump(7); say(`ВАУ!!! ${gift.e} ${gift.n}!!`, 2);
+      gLater(() => { state = 'fall'; t0 = T; start = new THREE.Vector3(S.x, .6, 1.3); env.visible = true; }, 1900);
+      return true;
+    }
     if (state !== 'wait') return true;
+    if (!unlocked) { askQuiz(); return true; }
+    return openLetter();
+  };
+  function openLetter() {
     state = 'open'; G.lookAt = null; ctl(''); buzz([15, 30, 15]); sfx.sparkle(); heartRing();
-    boardRe(env, letterTex(L), 1.75, 1.37); setEmotion('cheerful', 2, true);
+    boardRe(env, letterTex(LL()), 1.75, 1.37); setEmotion('cheerful', 2, true);
     const parts = L.m.replace(/([.!?…])\s+/g, '$1|').split('|').flatMap(p => p.length > 60 ? p.match(/.{1,55}(\s|$)/g) : [p]).filter(Boolean);
     let at = 600;
     gLater(() => say(`${L.f} чамд ингэж хэлж байна 💌`, 1.8), at); at += 2100;
     parts.forEach(p => { gLater(() => { setEmotion('cheerful', 2, true); say(p.trim(), 1.5); }, at); at += Math.max(1600, 900 + p.length * 70); });
     gLater(() => { env.visible = false; const d = performAct(L.k); gLater(finish, d); }, at);
     return true;
-  };
+  }
+  // 🧩 асуулттай захиа: зөв хариулбал л нээгдэнэ
+  function askQuiz() {
+    state = 'quiz'; G.lookAt = null;
+    G.bubbleLift = 2.35; G.viewOff = 0;
+    const ans = [L.qa, ...L.qw].sort(() => Math.random() - .5);
+    const cols = ['#ffe0ec', '#e7dcff', '#d4f5e6'];
+    const pillTex = (n, t, bg) => canvasTex(512, 160, g => { // том, уншихад амар хариултын товч
+      roundRect(g, 8, 8, 496, 144, 72); g.fillStyle = bg; g.fill(); g.lineWidth = 10; g.strokeStyle = '#3b2740'; g.stroke();
+      g.font = `68px ${EMO}`; g.fillText(n, 82, 86); g.fillStyle = '#3b2740'; fitFont(g, t, 330, 58); g.fillText(t, 300, 86);
+    });
+    const bubs = ans.map((a, i) => sAdd(makeSprite(pillTex(['1️⃣', '2️⃣', '3️⃣'][i], a, cols[i]), .001, false)));
+    const g0 = T; let done = false, miss = 0;
+    setScore('🧩 Зөв хариулбал нээгдэнэ'); setEmotion('suspicious', 3, true); VOC.hmm(); squash(-2); sfx.thud(2);
+    say(`🧩 ${L.qq}`, 6);
+    ctl(`<div class="gtip">🔒 ${esc(L.f)} асуулт тавьжээ:<br><b style="font-size:16px">${esc(L.qq)}</b><br>Зөв хариултын бөмбөлгийг дар 👆</div>`);
+    const prevTick = G.tick;
+    G.tick = dt => {
+      prevTick(dt);
+      bubs.forEach((s, i) => {
+        if (!s.visible) return;
+        const k = clamp((T - g0 - .8) * 2.5 - i * .2, 0, 1), w = Math.exp(-(T - (s.userData.hitT || -9)) * 7);
+        const sz = (k > 0 ? easeBack(k) : .001) * (s.userData.win ? 1.08 + Math.sin(T * 10) * .04 : 1);
+        s.position.set(S.x + Math.sin(T * 1.6 + i * 2) * .06 + Math.sin(T * 50) * .08 * w, 4.0 - i * .72, .9); s.scale.set(1.9 * sz, .594 * sz, 1);
+      });
+    };
+    G.targets = bubs;
+    G.onDown = hit => {
+      if (done || !hit) return true;
+      const i = bubs.indexOf(hit.object); if (i < 0) return true;
+      if (ans[i] === L.qa) {
+        done = true; unlocked = true; bubs[i].userData.win = true; G.targets = [];
+        setEmotion('hyper', 2, true); VOC.yay(); jump(6); confetti3D(24); buzz([20, 40, 20]); sfx.sparkle();
+        say(miss ? `За за, "${L.qa}" зөв! 😆🔓` : `ЗӨВ!! "${L.qa}" 🎉🔓 Чи жинхэнэ найз нь юм аа`, 2.2);
+        gLater(() => { bubs.forEach(b => b.visible = false); G.bubbleLift = 0; G.viewOff = innerHeight * .08; G.onDown = () => true; openLetter(); }, 2300);
+      } else {
+        miss++; bubs[i].userData.hitT = T; buzz(25); squash(-3); bubs[i].material.opacity = .35; // буруу: чичирч бүдгэрнэ
+        const dead = bubs[i]; G.targets = G.targets.filter(t => t !== dead);
+        setEmotion('sassy', 1.6, true); VOC.hmph();
+        say(pick([`"${ans[i]}"? Үгүй ээ 😏`, `Буруу!! ${L.f} гомдох нь дээ 🙈`, 'Хэхэ, биш шүү 🤭']), 1.6);
+      }
+      return true;
+    };
+  }
   function finish() {
-    env.visible = true; boardRe(env, letterTex(L), 1.75, 1.37); G.poseFn = HOLD; hatOn(false);
+    env.visible = true; boardRe(env, letterTex(LL()), 1.75, 1.37); G.poseFn = HOLD; hatOn(false); if (CAKE) CAKE.visible = false;
+    G.viewOff = innerHeight * .2; setScore(`💌 Хэнээс: ${L.f}`); G.targets = []; G.onDown = () => true;
     setEmotion('love', 2, true); say('Хариу захиа явуулах уу? 💌', 2);
-    ctl(`<div class="gcard res"><div class="big">💌</div><b>Хэнээс: ${esc(L.f)}</b><p>“${esc(L.m)}”</p></div>
-      <button class="gc" id="rAgain">🔁 Дахин</button><button class="gc" id="rReply" style="--c:#ffd6e6">💌 Хариу илгээх</button><button class="gc wide" id="rHome">🏠 Moodi-тай тоглох</button>`);
+    ctl(`<div class="gcard res"><div class="big">${gift ? gift.e : '💌'}</div><b>Хэнээс: ${esc(L.f)}</b><p>“${esc(L.m)}”</p></div>
+      <button class="gc wide big2" id="rReply" style="--c:#ffd6e6">💌 ${esc(L.f)}-д хариу илгээх</button>
+      <button class="gc" id="rStory" style="--c:#fff0b8;flex:1">📸 Story зураг</button><button class="gc" id="rAgain" style="flex:1">🔁 Дахин</button><button class="gc" id="rHome">🏠</button>`);
     c$('#rAgain').onclick = () => receiveScene(L, after);
     c$('#rReply').onclick = () => sendScene(L.f);
+    c$('#rStory').onclick = () => storyShot({ head: `💌 Хэнээс: ${L.f}`, msg: L.m, e: gift ? gift.e : (KINDS.find(k => k.id === L.k) || KINDS[0]).e, c: L.c });
     c$('#rHome').onclick = () => { exitScene(); setEmotion('happy', 1.5); say('Сайн найзтай юм аа чи 🥰', 1.8); after && after(); };
   }
+}
+// 🔒 хугацаатай захиа: тэр өдөр болтол онгойхгүй
+function lockedScene(L, after) {
+  inboxSave(L);
+  openScene('recv', '🔒 Түгжээтэй захиа', `Хэнээс: ${L.f}`);
+  if (L.c) G.tint = new THREE.Color(MCOL.find(c => c.id === L.c).c);
+  G.viewOff = innerHeight * .12; G.onExit = () => { after && after(); };
+  const env = board(envTex(), 1.15, .81), lock = sAdd(makeSprite(emojiTex('🔒'), .5, false));
+  const start = new THREE.Vector3(S.x, topY + 1.5, 1.3), t0 = T, left = daysBetween(dayKey(), L.o);
+  let landed = false, taps = 0, hitT = -9;
+  setTick(() => {
+    const k = clamp((T - t0) / 1.4, 0, 1); body.getWorldPosition(_v);
+    if (!landed) {
+      env.position.lerpVectors(start, _a.set(_v.x, _v.y - .67, _v.z + 1.3), 1 - Math.pow(1 - k, 3)); env.scale.set(1.15, .81, 1);
+      if (k >= 1) {
+        landed = true; env.userData.pop = T - 1; G.poseFn = HOLD; squash(-3); sfx.thud(3); setEmotion('shocked', 1.4, true); VOC.gasp();
+        say('Захиа!! ...гэхдээ түгжээтэй байна 🔒', 2.2);
+        ctl(`<div class="gcard res"><div class="big">🔒</div><b>Энэ захиа ${fmtDay(L.o)}-нд нээгдэнэ</b><p>⏳ <b>${left}</b> хоног үлдлээ. Тэр өдөр Moodi-г нээхэд захиа өөрөө гарч ирнэ 💌</p></div>
+          <button class="gc wide" id="lkOk" style="--c:#d4f5e6">🥺 За, хүлээе</button>`);
+        c$('#lkOk').onclick = () => { exitScene(); setEmotion('cheerful', 1.6); say(`${left} хоног... тэвчье 🥺🔒`, 1.8); after && after(); };
+        setScore(`⏳ ${left} хоног · 👆 Оролдоод үз`);
+      }
+    } else holdBoard(env, .38);
+    const w = Math.exp(-(T - hitT) * 9);
+    env.material.rotation = Math.sin(T * 40) * .1 * w;
+    lock.position.copy(env.position).add(_a.set(0, -.05, .05)); lock.scale.setScalar(.5 + w * .15);
+  });
+  G.onDown = () => {
+    if (!landed) return true;
+    taps++; hitT = T; buzz(20); sfx.thud(2); squash(-2);
+    setEmotion(taps > 3 ? 'angry' : 'confused', 1.2, true);
+    say(pick(['Онгойхгүй байна 😤', 'Ммм... 🔒', 'Нууц код хэрэгтэй юм уу? 🤔', 'Хүлээх хэрэгтэй юм байна 🥺']), 1.2);
+    return true;
+  };
+}
+
+/* ═══ 📸 STORY КАРТ: Moodi + захиа → 1080×1920 зураг ═══ */
+function storyShot(o) {
+  flash.animate([{ opacity: .9 }, { opacity: 0 }], { duration: 400, easing: 'ease-out' }); sfx.shutter(); buzz(20);
+  const hid = SO.filter(x => x.isSprite && x.userData.w && x.visible); hid.forEach(x => x.visible = false); // гарт барьсан самбарыг түр нууна
+  S.afterRender = () => { try { S.snapClosed = false; showPhoto(composeStory(o)); } catch (e) { say('зураг үүсгэж чадсангүй 😢', 1.6); } finally { hid.forEach(x => x.visible = true); } };
+}
+function composeStory(o) {
+  const W = 1080, H = 1920, P = document.createElement('canvas'); P.width = W; P.height = H;
+  const p = P.getContext('2d'); p.textAlign = 'center'; p.textBaseline = 'middle';
+  const tint = o.c ? MCOL.find(c => c.id === o.c).c : '#ffd6e6';
+  const bg = p.createLinearGradient(0, 0, W, H); bg.addColorStop(0, '#ffe3ee'); bg.addColorStop(.55, tint); bg.addColorStop(1, '#e7dcff');
+  p.fillStyle = bg; p.fillRect(0, 0, W, H);
+  p.fillStyle = 'rgba(255,255,255,.35)'; for (let y = 30; y < H; y += 54) for (let x = (y / 54 % 2) * 27 + 20; x < W; x += 54) { p.beginPath(); p.arc(x, y, 5, 0, 6.283); p.fill(); }
+  // гарчиг
+  p.font = '900 58px Nunito, sans-serif'; const tw = Math.min(980, p.measureText(o.head).width + 110);
+  roundRect(p, W / 2 - tw / 2, 120, tw, 120, 60); p.fillStyle = '#fff'; p.fill(); p.lineWidth = 9; p.strokeStyle = '#3b2740'; p.stroke();
+  p.fillStyle = '#3b2740'; fitFont(p, o.head, tw - 80, 58); p.fillText(o.head, W / 2, 182);
+  // Moodi (3D дэлгэцээс таслан авна)
+  const sc = canvas.width / innerWidth, head = headScreen(0.15), gnd = groundScreen();
+  const cs = Math.min(innerWidth * .98, Math.max(160, (gnd.y - head.y) * 1.75)), cx = (head.x + gnd.x) / 2, cy = (head.y + gnd.y) / 2;
+  const sx = clamp(cx - cs / 2, 0, innerWidth - cs), sy = clamp(cy - cs / 2, 0, innerHeight - cs);
+  p.save(); p.translate(W / 2, 760); p.rotate(-.035);
+  roundRect(p, -410, -410, 820, 820, 80); p.fillStyle = '#fff'; p.fill(); p.lineWidth = 12; p.strokeStyle = '#3b2740'; p.stroke();
+  roundRect(p, -385, -385, 770, 770, 60); p.save(); p.clip();
+  const ig = p.createRadialGradient(0, -100, 0, 0, 0, 560); ig.addColorStop(0, '#fff8fb'); ig.addColorStop(1, tint); p.fillStyle = ig; p.fillRect(-385, -385, 770, 770);
+  p.drawImage(canvas, sx * sc, sy * sc, cs * sc, cs * sc, -385, -385, 770, 770); p.restore(); p.restore();
+  // наалтууд
+  p.font = `120px ${EMO}`; [[o.e, 175, 420, -.25], ['💖', 905, 455, .25], ['✨', 930, 1080, .15]].forEach(([e, x, y, r]) => { p.save(); p.translate(x, y); p.rotate(r); p.fillText(e, 0, 0); p.restore(); });
+  // захианы цаас
+  p.save(); p.translate(W / 2, 1490); p.rotate(.02);
+  roundRect(p, -450, -250, 900, 500, 44); p.fillStyle = '#fffaf0'; p.fill(); p.lineWidth = 10; p.strokeStyle = '#3b2740'; p.stroke();
+  p.strokeStyle = 'rgba(59,39,64,.12)'; p.lineWidth = 3; for (let y = -150; y < 230; y += 76) { p.beginPath(); p.moveTo(-400, y + 36); p.lineTo(400, y + 36); p.stroke(); }
+  p.fillStyle = '#3b2740'; let fs = 66, lines;
+  do { p.font = `800 ${fs}px Nunito, sans-serif`; lines = wrapLines(p, o.msg, 800); fs -= 3; } while (lines.length * fs * 1.3 > 400 && fs > 28);
+  const lh = (fs + 3) * 1.3; lines.forEach((t, i) => p.fillText(t, 0, (i - (lines.length - 1) / 2) * lh));
+  p.restore();
+  p.globalAlpha = .7; p.font = '900 38px Nunito, sans-serif'; p.fillText('MOODI 💌', W / 2, 1830); p.globalAlpha = 1;
+  return P.toDataURL('image/jpeg', .92);
 }
 
 /* ═══ 🎂 ЧИНИЙ ТӨРСӨН ӨДӨР: малгай, бялуу, дуу — лааг чи үлээнэ ═══ */
@@ -3558,7 +3922,8 @@ function partyScene(after) {
 /* ── хажуугийн товч + хоосон үеийн "чамайг санадаг" ярианууд ── */
 function refreshSide() { $('#meBtn').classList.toggle('new', !MOODLOG[dayKey()]); }
 $('#meBtn').addEventListener('click', () => { ac(); buzz(8); if (S.gameOpen) return; ME.met ? meScene() : meetScene(() => meScene()); });
-$('#sendBtn').addEventListener('click', () => { ac(); buzz(8); if (S.gameOpen) return; sendScene(); });
+$('#sendFab').addEventListener('click', () => { ac(); buzz(10); sfx.pop(); if (S.gameOpen) return; store.set('moodi-fabSeen', '1'); $('#sendFab').classList.add('seen'); sendScene(); });
+if (store.get('moodi-fabSeen', '') === '1') $('#sendFab').classList.add('seen');
 refreshSide();
 function likeIdle() {
   const l = LIKES.find(x => x.id === pick(ME.likes)); if (!l) return false;
@@ -4068,13 +4433,17 @@ function intro() {
     if (!MOODLOG[dayKey()]) moodScene();
   };
   if (LETTER) { openLater(() => receiveScene(LETTER, () => setTimeout(() => { if (!S.gameOpen) flow(); }, 900)), 1300); return; }
+  const due = inboxDue();
+  if (due) { // 🔒 хүлээж байсан захиа өнөөдөр нээгдлээ!
+    later(() => { setEmotion('hyper', 2); say('🔓 Түгжээтэй захиа чинь өнөөдөр нээгдлээ!!', 2.2); jump(6); }, 900);
+    openLater(() => receiveScene(due, () => setTimeout(() => { if (!S.gameOpen) flow(); }, 900)), 3300); return;
+  }
   if (!ME.met) { // анх удаа: ичимхий мэндчилгээ → танилцах
     later(() => { setEmotion('shocked', 1.2); sfx.boing(); jump(6); }, 900);
     later(() => { setEmotion('shy', 2.2); say('...сайн уу? 👋', 1.6); }, 1700);
-    later(() => { setEmotion('love', 2.4); say('Намайг Ариук гэдэг 🌱', 1.8); }, 3300);
-    later(() => { setEmotion('cheerful', 2.4); say('Гэхдээ бүгд Moodi гэж дууддаг 😚', 2); }, 5300);
-    later(() => { setEmotion('shy', 2); say('Чи хэн бэ? 🥺', 1.6); }, 7400);
-    openLater(flow, 9000); return;
+    later(() => { setEmotion('love', 2.4); say('Намайг Moodi гэдэг 🌱', 1.8); }, 3300);
+    later(() => { setEmotion('shy', 2); say('Чи хэн бэ? 🥺', 1.6); }, 5300);
+    openLater(flow, 6900); return;
   }
   const nm = userName || 'найз минь', isBday = ME.bd === today.slice(5);
   const lines = [];
@@ -4101,6 +4470,7 @@ function frame() {
   T += dt;
   update(dt);
   renderer.render(scene, camera);
+  if (S.afterRender) { const f = S.afterRender; S.afterRender = null; f(); }
   if (S.snapPending) { S.snapPending = false; try { showPhoto(capture()); } catch (e) { say('зураг авч чадсангүй 😢', 1.6); } }
   // сул утсан дээр pixel ratio-г автоматаар бууруулна
   if (++frames > 120) {
